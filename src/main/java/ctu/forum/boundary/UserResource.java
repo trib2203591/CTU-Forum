@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class UserResource {
     private final UserService userService;
 
-    @Inject
+    @Inject // this is the service injection
     public UserResource(UserService userService) {
         this.userService = userService;
     }
