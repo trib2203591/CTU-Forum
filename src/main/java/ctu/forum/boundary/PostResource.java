@@ -38,24 +38,4 @@ public class PostResource {
         }
     }
 
-
-    // public Response createPost(PostDTO postDTO) {
-    // try {
-    // postService.createPost(postDTO);
-    // return Response.ok(postDTO).build();
-    // } catch (IllegalArgumentException e) {
-    // return Response.status(Response.Status.BAD_REQUEST).build();
-    // } catch (Exception e) {
-    // return Response.status(500).build();
-    // }
-    // }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String testApi() {
-        // logger.info("It gets here");
-        // logger.info("hehe");
-        System.out.println("nooooo");
-        return "API is working!";
-    }
 }
