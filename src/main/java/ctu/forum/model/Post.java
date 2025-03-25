@@ -22,8 +22,8 @@ public class Post extends PanacheMongoEntity {
     public String content;
     public List<Tag> tags;
     public ObjectId user_id;
-    public BigInteger vote_count;
-    public BigInteger comment_count;
+    public Long vote_count;
+    public Long comment_count;
     public Date create_at;
     public Date update_at;
 }

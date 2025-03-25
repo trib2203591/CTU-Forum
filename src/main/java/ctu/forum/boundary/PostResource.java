@@ -25,7 +25,6 @@ public class PostResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPost(PostDTO postDTO) {
-        System.out.println("hehehehhe");
         try {
             postService.createPost(postDTO);
             return Response.status(Response.Status.CREATED).build();
@@ -34,7 +33,7 @@ public class PostResource {
                     .entity("Invalid data: " + e.getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Unexpected error uccurred.").build();
+                    .entity("Unexpected error uccurred."+e.getMessage()).build();
         }
     }
 

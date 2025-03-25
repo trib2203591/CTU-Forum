@@ -2,7 +2,6 @@ package ctu.forum.dto;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 
 import ctu.forum.model.Tag;
 import lombok.AllArgsConstructor;
@@ -18,4 +17,6 @@ public class PostDTO {
     private String title;
     private String content;
     private List<Tag> tags;
+    private Long vote_count;
+    private Long comment_count;
 }
