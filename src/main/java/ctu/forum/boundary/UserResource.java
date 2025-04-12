@@ -30,37 +30,66 @@ public class UserResource {
 
     @POST
     public Response createUser(UserDTO userDTO) {
-        userService.createUser(userDTO);
-        return Response
-                .status(Response.Status.OK)
-                .entity("{\"success\" : true}")
-                .build();
+        try {
+            ResponseMessage responseMessage = new ResponseMessage(true, "User created successfully.");
+            userService.createUser(userDTO);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(responseMessage)
+                    .build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST)
+                            .entity(responseMessage)
+                            .build();
+        } catch (Exception e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(responseMessage)
+                            .build();
+        }
     }
 
     @GET
     @Path("/student_id/{studentId}")
     public Response getUserByStudentId(@PathParam("studentId") String studentId) {
-        User user = userService.getUserByStudentId(studentId);
-        if (user != null) {
+        try {
+            User user = userService.getUserByStudentId(studentId);
             return Response.ok(user).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                           .entity("User not found for student_id: " + studentId)
-                           .build();
+
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(responseMessage)
+                            .build();
+        } catch (Exception e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(responseMessage)
+                            .build();
         }
+
     }
 
     @GET
     @Path("/name/{name}")
     public Response findUserByName(@PathParam("name") String name) {
-        List<SecuredUserDTO> user = userService.findUserByName(name);
-        if (user != null) {
+        try {
+            List<SecuredUserDTO> user = userService.findUserByName(name);
             return Response.ok(user).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                           .entity("User not found for name: " + name)
-                           .build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(responseMessage)
+                            .build();
+        } catch (Exception e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(responseMessage)
+                            .build();
         }
+
+
     }
 
     @DELETE
@@ -68,10 +97,14 @@ public class UserResource {
     public Response deleteUser(@PathParam("studentId") String studentId) {
         try {
             userService.deleteUser(studentId);
-            return Response.status(Response.Status.OK).entity("{\"success\" : true}").build();
+            ResponseMessage responseMessage = new ResponseMessage(true, "User deleted successfully.");
+            return Response.status(Response.Status.OK)
+                            .entity(responseMessage)
+                            .build();
         } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.NOT_FOUND)
-                           .entity(e.getMessage())
+                           .entity(responseMessage)
                            .build();
         }
     }

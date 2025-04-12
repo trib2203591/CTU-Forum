@@ -21,12 +21,18 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
     @Override
     public User getUserByStudentId (String student_id) {
         User user = this.find("student_id", student_id).firstResult();
+        if (user == null) {
+            throw new IllegalArgumentException("User with student_id " + student_id + " not found.");
+        }
         return user;
     }
 
     @Override
     public List<SecuredUserDTO> findUserByName(String name) {
         List<User> users = this.find("{ $name : { $search : ?1 } }", name).list();
+        if(users.isEmpty()) {
+            throw new IllegalArgumentException("User with name " + name + " not found.");
+        }
         List<SecuredUserDTO> securedUsers = users.stream()
                 .map(userMapper::toSecuredUserDTO)
                 .toList();
@@ -35,21 +41,35 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
 
     @Override
     public void createUser(UserDTO userDTO) {
-        User newUser = userMapper.toUser(userDTO);
-
-        newUser.created_at = new Date();
-        newUser.updated_at = new Date();
-
-        this.persist(newUser);
+        try {
+            if (!userDTO.validate()) {
+                throw new IllegalArgumentException("User info is not valid.");
+            }
+            if (this.find("student_id", userDTO.getStudent_id()).firstResult() != null) {
+                throw new IllegalArgumentException("User with student_id " + userDTO.getStudent_id() + " already exists.");
+            }
+            User newUser = userMapper.toUser(userDTO);
+    
+            newUser.created_at = new Date();
+            newUser.updated_at = new Date();
+    
+            this.persist(newUser);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
     }
+        
 
     @Override
     public void deleteUser(String student_id) {
-        User userToDelete = this.find("student_id", student_id).firstResult();
-        if (userToDelete != null) {
+        try {
+            User userToDelete = this.find("student_id", student_id).firstResult();
+            if (userToDelete == null) {
+                throw new IllegalArgumentException("User with student_id " + student_id + " not found.");
+            } 
             this.delete(userToDelete);
-        } else {
-            throw new IllegalArgumentException("User with student_id " + student_id + " not found.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
         }
     }
 
