@@ -15,6 +15,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("comment")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -34,19 +35,31 @@ public class CommentResource {
     }
 
     @POST
-    public void createComment(CommentDTO commentDTO) {
+    public Response createComment(CommentDTO commentDTO) {
         commentService.createComment(commentDTO);
+        return Response
+                .status(Response.Status.OK)
+                .entity("{\"success\" : true}")
+                .build();
     }
 
     @PUT
     @Path("/{comment_id}")
-    public void updateComment(CommentDTO commentDTO, @PathParam("comment_id") String comment_id) {
+    public Response updateComment(CommentDTO commentDTO, @PathParam("comment_id") String comment_id) {
         commentService.updateComment(commentDTO, comment_id);
+        return Response
+                .status(Response.Status.OK)
+                .entity("{\"success\" : true}")
+                .build();
     }
 
     @DELETE
     @Path("/{comment_id}")
-    public void deleteComment(@PathParam("comment_id") String comment_id) {
+    public Response deleteComment(@PathParam("comment_id") String comment_id) {
         commentService.deleteComment(comment_id);
+        return Response
+                .status(Response.Status.OK)
+                .entity("{\"success\" : true}")
+                .build();
     }
 }

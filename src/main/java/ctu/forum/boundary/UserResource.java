@@ -33,8 +33,9 @@ public class UserResource {
         userService.createUser(userDTO);
 
         return Response
-                    .status(Response.Status.CREATED)
-                    .build();
+                .status(Response.Status.CREATED)
+                .entity("{\"success\" : true}")
+                .build();
     }
 
     @GET
@@ -68,7 +69,7 @@ public class UserResource {
     public Response deleteUser(@PathParam("studentId") String studentId) {
         try {
             userService.deleteUser(studentId);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).entity("{\"success\" : true}").build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND)
                            .entity(e.getMessage())
