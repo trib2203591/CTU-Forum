@@ -24,9 +24,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(UserDTO userDTO) {
         userService.createUser(userDTO);
-
         return Response
-                    .status(Response.Status.CREATED)
-                    .build();
+                .status(Response.Status.CREATED)
+                .build();
     }
 }

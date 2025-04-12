@@ -14,5 +14,4 @@ public interface IUserMapper {
     @Mapping(target="updated_at", ignore = true)
     //TO DO: @Mapping(target="password_hash", ignore = true) // Prevent mapping raw passwords
     User toUser(UserDTO userDTO);
-
 }
