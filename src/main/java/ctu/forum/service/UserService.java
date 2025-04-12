@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class UserService implements IUserService, PanacheMongoRepository<User> {
 
-    @Inject
+    @Inject 
     IUserMapper userMapper;
 
     @Override

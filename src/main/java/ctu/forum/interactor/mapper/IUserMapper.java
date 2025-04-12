@@ -8,6 +8,7 @@ import ctu.forum.model.User;
 
 @Mapper(componentModel = "cdi")
 public interface IUserMapper {
+    
     @Mapping(target="id", ignore = true)
     @Mapping(target="created_at", ignore = true)
     @Mapping(target="updated_at", ignore = true)
