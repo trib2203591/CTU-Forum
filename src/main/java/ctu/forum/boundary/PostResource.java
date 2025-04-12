@@ -7,6 +7,15 @@ import com.arjuna.ats.internal.jdbc.drivers.modifiers.list;
 
 import ctu.forum.dto.PostDTO;
 import ctu.forum.interactor.in.IPostService;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import ctu.forum.dto.PostDTO;
+import ctu.forum.interactor.in.IPostService;
 import ctu.forum.model.Post;
 import ctu.forum.service.PostService;
 import jakarta.inject.Inject;

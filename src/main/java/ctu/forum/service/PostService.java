@@ -3,9 +3,11 @@ package ctu.forum.service;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.management.RuntimeErrorException;
 
 import org.bson.types.ObjectId;
+
 
 import ctu.forum.dto.PostDTO;
 import ctu.forum.interactor.in.IPostService;
@@ -17,6 +19,7 @@ import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class PostService implements IPostService, PanacheMongoRepository<Post> {
+
     @Inject
     IPostMapper iPostMapper;
 
