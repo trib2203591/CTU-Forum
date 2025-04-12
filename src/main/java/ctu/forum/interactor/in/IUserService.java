@@ -6,9 +6,8 @@ import ctu.forum.dto.UserDTO;
 import ctu.forum.model.User;
 
 public interface IUserService {
-    List<User> getAllUsers();
-    List<User> getUserByStudentId(String student_id);
+    User getUserByStudentId(String student_id);
+    List<User> findUserByName(String name);
     void createUser(UserDTO userDTO);
-    void updateUser(String id, UserDTO userDTO);
-    void deleteUser(String id);
+    void deleteUser(String student_id);
 }
