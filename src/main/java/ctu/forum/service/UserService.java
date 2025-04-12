@@ -29,7 +29,7 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
 
     @Override
     public List<User> findUserByName(String name) {
-        List<User> users = this.find("{ $text : { $search : ?1 } }", name).list();
+        List<User> users = this.find("{ 'name': { $regex: ?1, $options: 'i' } }", name).list();
         if(users.isEmpty()) {
             throw new IllegalArgumentException("User with name " + name + " not found.");
         }
