@@ -31,7 +31,6 @@ public class UserResource {
     @POST
     public Response createUser(UserDTO userDTO) {
         userService.createUser(userDTO);
-
         return Response
                 .status(Response.Status.CREATED)
                 .entity("{\"success\" : true}")

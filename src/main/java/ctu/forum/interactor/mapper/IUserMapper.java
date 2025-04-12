@@ -10,6 +10,7 @@ import ctu.forum.model.User;
 
 @Mapper(componentModel = "cdi")
 public interface IUserMapper {
+
     default String map(ObjectId value) {
         return value != null ? value.toHexString() : null;
     }
@@ -20,6 +21,7 @@ public interface IUserMapper {
     @Mapping(target="updated_at", ignore = true)
     //TO DO: @Mapping(target="password_hash", ignore = true) // Prevent mapping raw passwords
     User toUser(UserDTO userDTO);
+
 
     @Mapping(target="id", source = "user.id")
     SecuredUserDTO toSecuredUserDTO(User user);
