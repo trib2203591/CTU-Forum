@@ -26,7 +26,7 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
 
     @Override
     public List<SecuredUserDTO> findUserByName(String name) {
-        List<User> users = this.find("name", name).list();
+        List<User> users = this.find("{ $name : { $search : ?1 } }", name).list();
         List<SecuredUserDTO> securedUsers = users.stream()
                 .map(userMapper::toSecuredUserDTO)
                 .toList();

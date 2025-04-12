@@ -32,7 +32,7 @@ public class UserResource {
     public Response createUser(UserDTO userDTO) {
         userService.createUser(userDTO);
         return Response
-                .status(Response.Status.CREATED)
+                .status(Response.Status.OK)
                 .entity("{\"success\" : true}")
                 .build();
     }
