@@ -38,12 +38,12 @@ public class UserResource {
                     .entity(responseMessage)
                     .build();
         } catch (IllegalArgumentException e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST)
                             .entity(responseMessage)
                             .build();
         } catch (Exception e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                             .entity(responseMessage)
                             .build();
@@ -58,12 +58,12 @@ public class UserResource {
             return Response.ok(user).build();
 
         } catch (IllegalArgumentException e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                             .entity(responseMessage)
                             .build();
         } catch (Exception e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                             .entity(responseMessage)
                             .build();
@@ -78,12 +78,12 @@ public class UserResource {
             List<SecuredUserDTO> user = userService.findUserByName(name);
             return Response.ok(user).build();
         } catch (IllegalArgumentException e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                             .entity(responseMessage)
                             .build();
         } catch (Exception e) {
-            ResponseMessage responseMessage = new ResponseMessage(false, "Error: " + e.getMessage());
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                             .entity(responseMessage)
                             .build();

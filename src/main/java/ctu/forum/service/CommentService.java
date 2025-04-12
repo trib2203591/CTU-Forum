@@ -21,40 +21,66 @@ public class CommentService implements ICommentService, PanacheMongoRepository<C
 
     @Override
     public List<Comment> getCommentByPostId(String post_id) {
-        ObjectId id = new ObjectId(post_id);
-        List<Comment> comments = this.find("post_id", id).list();
-        return comments;
+        try {
+            ObjectId id = new ObjectId(post_id);
+            List<Comment> comments = this.find("post_id", id).list();
+            if(comments.isEmpty()) {
+                throw new IllegalArgumentException("No comments found for post_id " + post_id);
+            }
+            return comments;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
+
     }
 
     @Override
     public void createComment(CommentDTO commentDTO) {
-        Comment newComment = commentMapper.toComment(commentDTO);
-        newComment.created_at = new Date();
-        newComment.updated_at = new Date();
-        this.persist(newComment);
+        try {
+            if (!commentDTO.validate()) {
+                throw new IllegalArgumentException("Invalid comment data.");
+            }
+            Comment newComment = commentMapper.toComment(commentDTO);
+            newComment.created_at = new Date();
+            newComment.updated_at = new Date();
+            this.persist(newComment);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
+
     }
 
     @Override
     public void updateComment(CommentDTO commentDTO, String comment_id) {
-        ObjectId id = new ObjectId(comment_id);
-        Comment commentToUpdate = this.findById(id);
-        if (commentToUpdate != null) {
+        try {
+            if (!commentDTO.validate()) {
+                throw new IllegalArgumentException("Invalid comment data.");
+            }
+            ObjectId id = new ObjectId(comment_id);
+            Comment commentToUpdate = this.findById(id);
+            if (commentToUpdate == null) {
+                throw new IllegalArgumentException("Comment with id " + comment_id + " not found.");
+            }
             commentToUpdate.content = commentDTO.content;
             commentToUpdate.updated_at = new Date();
             this.update(commentToUpdate);
-        } else {
-            throw new IllegalArgumentException("Comment with id " + comment_id + " not found.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
         }
     }
 
     @Override
     public void deleteComment(String comment_id) {
-        ObjectId id = new ObjectId(comment_id);
-        Comment commentToDelete = this.findById(id);
-        if (commentToDelete != null) {
+        try {
+            ObjectId id = new ObjectId(comment_id);
+            Comment commentToDelete = this.findById(id);
+            if (commentToDelete == null) {
+                throw new IllegalArgumentException("Comment with id " + comment_id + " not found.");
+            } 
             this.delete(commentToDelete);
-        } else {
-            throw new IllegalArgumentException("Comment with id " + comment_id + " not found.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
         }
+        
     }
 }
