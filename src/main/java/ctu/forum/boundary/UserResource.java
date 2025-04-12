@@ -2,6 +2,7 @@ package ctu.forum.boundary;
 
 import java.util.List;
 
+import ctu.forum.dto.SecuredUserDTO;
 import ctu.forum.dto.UserDTO;
 import ctu.forum.model.User;
 import ctu.forum.service.UserService;
@@ -52,7 +53,7 @@ public class UserResource {
     @GET
     @Path("/name/{name}")
     public Response findUserByName(@PathParam("name") String name) {
-        List<User> user = userService.findUserByName(name);
+        List<SecuredUserDTO> user = userService.findUserByName(name);
         if (user != null) {
             return Response.ok(user).build();
         } else {

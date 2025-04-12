@@ -3,6 +3,7 @@ package ctu.forum.service;
 import java.util.Date;
 import java.util.List;
 
+import ctu.forum.dto.SecuredUserDTO;
 import ctu.forum.dto.UserDTO;
 import ctu.forum.interactor.in.IUserService;
 import ctu.forum.interactor.mapper.IUserMapper;
@@ -24,9 +25,12 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
     }
 
     @Override
-    public List<User> findUserByName(String name) {
+    public List<SecuredUserDTO> findUserByName(String name) {
         List<User> users = this.find("name", name).list();
-        return users;
+        List<SecuredUserDTO> securedUsers = users.stream()
+                .map(userMapper::toSecuredUserDTO)
+                .toList();
+        return securedUsers;
     }
 
     @Override
