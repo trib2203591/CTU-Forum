@@ -23,6 +23,6 @@ public interface IUserMapper {
     User toUser(UserDTO userDTO);
 
 
-    @Mapping(target="id", source = "user.id")
-    SecuredUserDTO toSecuredUserDTO(User user);
+    // @Mapping(target="id", source = "id")
+    // SecuredUserDTO toSecuredUserDTO(User user);
 }

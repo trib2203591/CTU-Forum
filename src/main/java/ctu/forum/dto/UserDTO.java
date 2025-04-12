@@ -19,6 +19,7 @@ public class UserDTO {
                name != null && !name.isEmpty() &&
                email != null && !email.isEmpty() &&
                password_hash != null && !password_hash.isEmpty();
+    }
 
     public String getStudent_id() {
         return student_id;

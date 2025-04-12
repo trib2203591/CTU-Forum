@@ -8,7 +8,7 @@ import ctu.forum.model.User;
 
 public interface IUserService {
     User getUserByStudentId(String student_id);
-    List<SecuredUserDTO> findUserByName(String name);
+    List<User> findUserByName(String name);
     void createUser(UserDTO userDTO);
     void deleteUser(String student_id);
 }

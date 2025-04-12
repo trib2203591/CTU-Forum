@@ -75,7 +75,7 @@ public class UserResource {
     @Path("/name/{name}")
     public Response findUserByName(@PathParam("name") String name) {
         try {
-            List<SecuredUserDTO> user = userService.findUserByName(name);
+            List<User> user = userService.findUserByName(name);
             return Response.ok(user).build();
         } catch (IllegalArgumentException e) {
             ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());

@@ -28,15 +28,15 @@ public class UserService implements IUserService, PanacheMongoRepository<User> {
     }
 
     @Override
-    public List<SecuredUserDTO> findUserByName(String name) {
-        List<User> users = this.find("{ $name : { $search : ?1 } }", name).list();
+    public List<User> findUserByName(String name) {
+        List<User> users = this.find("{ $text : { $search : ?1 } }", name).list();
         if(users.isEmpty()) {
             throw new IllegalArgumentException("User with name " + name + " not found.");
         }
-        List<SecuredUserDTO> securedUsers = users.stream()
-                .map(userMapper::toSecuredUserDTO)
-                .toList();
-        return securedUsers;
+        // List<SecuredUserDTO> securedUsers = users.stream()
+        //         .map(userMapper::toSecuredUserDTO)
+        //         .toList();
+        return users;
     }
 
     @Override
