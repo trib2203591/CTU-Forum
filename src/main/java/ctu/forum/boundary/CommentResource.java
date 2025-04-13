@@ -30,36 +30,66 @@ public class CommentResource {
 
     @GET
     @Path("/post_id/{post_id}")
-    public List<Comment> getCommentByPostId(@PathParam("post_id") String post_id) {
-        return commentService.getCommentByPostId(post_id);
+    public Response getCommentByPostId(@PathParam("post_id") String post_id) {
+        try {
+            List<Comment> comments = commentService.getCommentByPostId(post_id);
+            return Response.ok(comments).build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity(responseMessage)
+                           .build();
+        }
+        
     }
 
     @POST
     public Response createComment(CommentDTO commentDTO) {
-        commentService.createComment(commentDTO);
-        return Response
-                .status(Response.Status.OK)
-                .entity("{\"success\" : true}")
-                .build();
+        try {
+            commentService.createComment(commentDTO);
+            ResponseMessage responseMessage = new ResponseMessage(true, "Comment created successfully.");
+            return Response.status(Response.Status.OK)
+                           .entity(responseMessage)
+                           .build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity(responseMessage)
+                           .build();
+        }
     }
 
     @PUT
     @Path("/{comment_id}")
     public Response updateComment(CommentDTO commentDTO, @PathParam("comment_id") String comment_id) {
-        commentService.updateComment(commentDTO, comment_id);
-        return Response
-                .status(Response.Status.OK)
-                .entity("{\"success\" : true}")
-                .build();
+        try {
+            commentService.updateComment(commentDTO, comment_id);
+            ResponseMessage responseMessage = new ResponseMessage(true, "Comment updated successfully.");
+            return Response.status(Response.Status.OK)
+                           .entity(responseMessage)
+                           .build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity(responseMessage)
+                           .build();
+        }
     }
 
     @DELETE
     @Path("/{comment_id}")
     public Response deleteComment(@PathParam("comment_id") String comment_id) {
-        commentService.deleteComment(comment_id);
-        return Response
-                .status(Response.Status.OK)
-                .entity("{\"success\" : true}")
-                .build();
+        try {
+            commentService.deleteComment(comment_id);
+            ResponseMessage responseMessage = new ResponseMessage(true, "Comment deleted successfully.");
+            return Response.status(Response.Status.OK)
+                           .entity(responseMessage)
+                           .build();
+        } catch (IllegalArgumentException e) {
+            ResponseMessage responseMessage = new ResponseMessage(false, e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity(responseMessage)
+                           .build();
+        }
     }
 }
