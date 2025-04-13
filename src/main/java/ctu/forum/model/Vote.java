@@ -21,4 +21,5 @@ public class Vote extends PanacheMongoEntity{
     public String vote_type;
     public Date created_at; // timestamp of when the vote was created
     public Date updated_at; // timestamp of when the vote was last updated
+
 }

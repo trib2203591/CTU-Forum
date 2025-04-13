@@ -16,5 +16,14 @@ public class VoteDTO {
     public String getVote_type() {
         return vote_type;
     }
+    public String getComment_id() {
+        return comment_id;
+    }
+    public String getPost_id() {
+        return post_id;
+    }
+    public String getUser_id() {
+        return user_id;
+    }
 
 }
