@@ -85,7 +85,7 @@ public class PostResource {
     @GET
     @Path("search/{string}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPostsByText(@PathParam("text") String string) {
+    public Response getPostsByText(@PathParam("string") String string) {
         try {
             List<Post> posts = postService.getPostByText(string);
             if (posts == null) {
