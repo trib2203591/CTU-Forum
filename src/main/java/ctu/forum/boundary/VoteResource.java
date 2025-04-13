@@ -37,12 +37,13 @@ public class VoteResource {
 
             voteService.createVote(voteDTO);
             response.put("success", true);
+            response.put("message", "Created vote successfully");
             return Response
                     .status(Response.Status.CREATED)
                     .entity(response)
                     .build();
         } catch (IllegalArgumentException e) {
-            response.put("error", e.getMessage());
+            response.put("message", e.getMessage());
             response.put("success", false);
             return Response
                     .status(Response.Status.BAD_REQUEST)
@@ -62,12 +63,19 @@ public class VoteResource {
     @Path("/post/{post_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVoteByPostId(@PathParam("post_id") String post_id) {
+        Map<String, Object> response = new HashMap<>();
         try{
-            return Response.ok(voteService.getVoteByPostId(post_id)).build();
+            response.put("success", true);
+            response.put("data", voteService.getVoteByPostId(post_id));
+            return Response.ok(response)
+                        .build();
+            // return Response.ok(voteService.getVoteByPostId(post_id)).build();
         } catch (IllegalArgumentException e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
+                    .entity(response)
                     .build();
         }
     }
@@ -75,12 +83,19 @@ public class VoteResource {
     @Path("/comment/{comment_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVoteByCommentId(@PathParam("comment_id") String comment_id) {
+        Map<String, Object> response = new HashMap<>();
         try{
-            return Response.ok(voteService.getVoteByCommentId(comment_id)).build();
+            response.put("success", true);
+            response.put("data", voteService.getVoteByCommentId(comment_id));
+            return Response.ok(response)
+                    .build();
         } catch (IllegalArgumentException e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
+                    .entity(response)
                     .build();
         }
     }
@@ -93,6 +108,7 @@ public class VoteResource {
         Map<String, Object> response = new HashMap<>();
         try {
             response.put("success", true);
+            response.put("message", "Updated vote successfully");
             voteService.updateVote(id, voteDTO);
             return Response
                     .status(Response.Status.OK)
@@ -100,7 +116,7 @@ public class VoteResource {
                     .build();            
         } catch (IllegalArgumentException e) {
             response.put("success", false);
-            response.put("error", e.getMessage());
+            response.put("message", e.getMessage());
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(response)
@@ -118,6 +134,7 @@ public class VoteResource {
         Map<String, Object> response = new HashMap<>();
         try {
             response.put("success", true);
+            response.put("message", "Deleted vote successfully");
             voteService.deleteVote(id);
             return Response
                     .status(Response.Status.OK)
@@ -125,7 +142,7 @@ public class VoteResource {
                     .build();            
         } catch (IllegalArgumentException e) {
             response.put("success", false);
-            response.put("error", e.getMessage());
+            response.put("message", e.getMessage());
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(response)

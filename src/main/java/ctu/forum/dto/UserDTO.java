@@ -13,10 +13,17 @@ public class UserDTO {
     private String email;
     private String password_hash;
 
+
     public boolean validate() {
         return student_id != null && !student_id.isEmpty() &&
                name != null && !name.isEmpty() &&
                email != null && !email.isEmpty() &&
                password_hash != null && !password_hash.isEmpty();
+
+    public String getStudent_id() {
+        return student_id;
+    }
+    public String password_hash() {
+        return password_hash;
     }
 }
