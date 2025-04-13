@@ -12,4 +12,11 @@ public class UserDTO {
     private String name;
     private String email;
     private String password_hash;
+
+    public String getStudent_id() {
+        return student_id;
+    }
+    public String password_hash() {
+        return password_hash;
+    }
 }
