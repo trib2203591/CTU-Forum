@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -48,7 +49,7 @@ public class PostResource {
     }
 
     @GET
-    @Path("all")
+    // @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPosts() {
         try {
@@ -62,8 +63,9 @@ public class PostResource {
     }
 
     @GET
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPostById(@QueryParam("id") String id) {
+    public Response getPostById(@PathParam("id") String id) {
         try {
             Post post = postService.getPostById(id);
             if (post == null)
@@ -81,9 +83,9 @@ public class PostResource {
     }
 
     @GET
-    @Path("search")
+    @Path("search/{string}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPostsByText(@QueryParam("text") String string) {
+    public Response getPostsByText(@PathParam("text") String string) {
         try {
             List<Post> posts = postService.getPostByText(string);
             if (posts == null) {
@@ -98,9 +100,10 @@ public class PostResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePost(PostDTO post, @QueryParam("id") String id) {
+    public Response updatePost(PostDTO post, @PathParam("id") String id) {
         try {
             postService.updatePost(post, id);
             ResponseMessage responseMessage = new ResponseMessage(true, "Post updated successfully.");
@@ -117,7 +120,8 @@ public class PostResource {
     }
 
     @DELETE
-    public Response deletePost(@QueryParam("id") String string) {
+    @Path("/{id}")
+    public Response deletePost(@PathParam("id") String string) {
         try {
             postService.deletePost(string);
             ResponseMessage responseMessage = new ResponseMessage(true, "Post deleted successfully.");
